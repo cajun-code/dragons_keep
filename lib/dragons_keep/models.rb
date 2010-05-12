@@ -1,8 +1,8 @@
 # To change this template, choose Tools | Templates
 # and open the template in the editor.
-
+require 'activerecord'
 module DragonsKeep
-    class Accounts
+  class Account < ActiveRecord::Base
 
 
       def generate_password( len )

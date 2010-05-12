@@ -1,5 +1,5 @@
 ## YAML Template.
-adaptor: sqlite3
+adapter: sqlite3
 database: db/dragonskeep.db
 # Not used with a sqlite database
 #username:

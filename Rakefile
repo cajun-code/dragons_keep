@@ -11,6 +11,7 @@ require 'rake/rdoctask'
 require 'rake/testtask'
 require 'active_record'
 require 'yaml'
+require 'logger'
 
 spec = Gem::Specification.new do |s|
   s.name = 'dragons_keep'
@@ -48,7 +49,7 @@ end
 
 desc "Migrate the database through migrations scripts"
 task :migrate => :enviroment do
-  ActiveRecord::Migrator.migrate('db/migrate', ENV["VERSION"]? ENV["VERSION"].to_i : nil)
+  ActiveRecord::Migrator.migrate('db/migrations', ENV["VERSION"]? ENV["VERSION"].to_i : nil)
 end
 
 task :enviroment do
