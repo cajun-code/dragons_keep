@@ -1,4 +1,20 @@
 # To change this template, choose Tools | Templates
 # and open the template in the editor.
+require 'rubygems'
+require 'wx'
+require 'dragons_keep/keeps_main'
 
 
+module DragonsKeep
+
+  class DragonsKeepApp < Wx::App
+    def on_init()
+      self.app_name = "Dragon's Keep"
+      @frame = KeepsMain.new "Dragon's Keep"
+      @frame.show
+    end
+  end
+end
+
+dk = DragonsKeep::DragonsKeepApp.new
+dk.main_loop

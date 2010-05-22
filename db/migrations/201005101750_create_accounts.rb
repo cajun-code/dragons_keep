@@ -8,6 +8,7 @@ class CreateAccounts < ActiveRecord::Migration
       t.string :password
       t.string :salt
       t.string :url
+      t.string :user_name
       
       t.timestamps
     end
