@@ -11,6 +11,7 @@ module DragonsKeep
     def on_init()
       self.app_name = "Dragon's Keep"
       @frame = KeepsMain.new "Dragon's Keep"
+      @frame.center_on_screen(Wx::BOTH)
       @frame.show
     end
   end

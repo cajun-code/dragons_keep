@@ -2,6 +2,7 @@
 # and open the template in the editor.
 
 require 'wx'
+require 'dragons_keep/account_dialog'
 
 module DragonsKeep
   class KeepsMain < Wx::Frame
@@ -36,13 +37,17 @@ module DragonsKeep
       
     end
     def on_new_account
-
+      account_dialog = AccountDialog.new(self, -1, "New Account")
+      account_dialog.center_on_screen(Wx::BOTH)
+      account_dialog.show_modal()
     end
     def on_edit_account
 
     end
     def on_copy_password
-
+      Wx::Clipboard.open do | clip |
+        clip.data = Wx::TextDataObject.new('Some text')
+      end
     end
 
     private
@@ -91,15 +96,15 @@ module DragonsKeep
       evt_menu ID_EDIT_COPY, :on_copy_password
       evt_menu ID_FILE_NEW_ACCOUNT, :on_new_account
       evt_menu ID_FILE_EDIT_ACCOUNT, :on_edit_account
-      evt_update_ui(ID_FILE_NEW_ACCOUNT)do |evt|
-        evt.enable(!@account_conrtoler.nil?)
-      end
+#      evt_update_ui(ID_FILE_NEW_ACCOUNT)do |evt|
+#        evt.enable(!@account_conrtoler.nil?)
+#      end
       evt_update_ui(ID_FILE_EDIT_ACCOUNT)do |evt|
         evt.enable(!(@account_conrtoler.nil?) && @account_list.get_selections.nil?)
       end
-      evt_update_ui(ID_EDIT_COPY) do |evt|
-        evt.enable(!(@account_conrtoler.nil?) && @account_list.get_selections.nil?)
-      end
+#      evt_update_ui(ID_EDIT_COPY) do |evt|
+#        evt.enable(!(@account_conrtoler.nil?) && @account_list.get_selections.nil?)
+#      end
     end
 
   end
