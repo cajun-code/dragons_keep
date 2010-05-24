@@ -17,7 +17,7 @@ module DragonsKeep
       super parent, id, title
       self.set_size(Wx::Size.new(400, 300))
       main_sizer = Wx::BoxSizer.new(Wx::VERTICAL)
-      grid_sizer = Wx::GridSizer.new(4,2,5,5)
+      grid_sizer = Wx::FlexGridSizer.new(4,2,5,5)
 
       # Create name entry      
       label = Wx::StaticText.new(self, :label=>"Name:")
@@ -37,15 +37,27 @@ module DragonsKeep
       @user = Wx::TextCtrl.new self, ID_USER_NAME
       grid_sizer.add @user, 1, Wx::EXPAND
       
-      # Create password entry
-      
+      # Create password entry      
       label = Wx::StaticText.new(self, :label=>"Password:")
       grid_sizer.add label, 0, Wx::ALL |Wx::ALIGN_RIGHT
       @pass = Wx::TextCtrl.new self, ID_PASSWORD
       grid_sizer.add @pass, 1, Wx::EXPAND
       main_sizer.add grid_sizer, 0, Wx::GROW|Wx::ALIGN_CENTER_VERTICAL|Wx::ALL, 5
+      grid_sizer.add_growable_col(1)
+      # add spacer to grid
+      grid_sizer.add(25, 25)
+      # Add generate password button
+      @gen_button = Wx::Button.new self, ID_GENERATE_PASSWORD, "Generate Password..."
+      grid_sizer.add @gen_button, 1, Wx::EXPAND
+      evt_button(ID_GENERATE_PASSWORD)do |evt|
+        self.gen_pass_click(evt)
+      end
 
+      
       self.set_sizer main_sizer
+
+    end
+    def gen_pass_click(event)
 
     end
   end
