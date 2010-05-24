@@ -49,9 +49,7 @@ module DragonsKeep
       # Add generate password button
       @gen_button = Wx::Button.new self, ID_GENERATE_PASSWORD, "Generate Password..."
       grid_sizer.add @gen_button, 1, Wx::EXPAND
-      evt_button(ID_GENERATE_PASSWORD)do |evt|
-        self.gen_pass_click(evt)
-      end
+      evt_button(ID_GENERATE_PASSWORD){|evt| self.gen_pass_click(evt)} 
 
       
       self.set_sizer main_sizer
