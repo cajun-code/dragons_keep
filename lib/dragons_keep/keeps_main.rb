@@ -23,6 +23,7 @@ module DragonsKeep
       create_status_bar(1)
       create_contents
       register_events
+      
     end
 
     # End the application; it should finish automatically when the last
