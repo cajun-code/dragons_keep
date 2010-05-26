@@ -1,6 +1,6 @@
 # To change this template, choose Tools | Templates
 # and open the template in the editor.
-require 'activerecord'
+require 'active_record'
 module DragonsKeep
   class Account < ActiveRecord::Base
     attr_accessor :unencrypted_password, :password_confirmation

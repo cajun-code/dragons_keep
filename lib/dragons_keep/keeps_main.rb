@@ -3,6 +3,7 @@
 
 require 'wx'
 require 'dragons_keep/account_dialog'
+require 'dragons_keep/account_controler'
 
 module DragonsKeep
   class KeepsMain < Wx::Frame
@@ -32,10 +33,39 @@ module DragonsKeep
       close()
     end
     def on_new_database
-      
+      file_dialog = Wx::FileDialog.new(self, "Choose File for new Database", :wildcard=>"Keep Files(*.keep)|*.keep", :style=>Wx::FD_SAVE)
+      file_dialog.center_on_screen(Wx::BOTH)
+      if file_dialog.show_modal == Wx::ID_OK
+        password_dialog = Wx::PasswordEntryDialog.new(self, "Please enter a password for this database")
+        if password_dialog.show_modal == Wx::ID_OK
+          password = password_dialog.get_value
+          file = file_dialog.get_path
+          if (file=~/.keep$/) == nil
+            file << ".keep"
+          end
+          puts file
+          @account_controler = AccountControler.new file, password
+
+          @account_controler.establish_connection
+        end
+      end
     end
     def on_connect_database
-      
+      file_dialog = Wx::FileDialog.new(self, "Choose Keep File", :wildcard=>"Keep Files(*.keep)|*.keep")
+      file_dialog.center_on_screen(Wx::BOTH)
+      if file_dialog.show_modal == Wx::ID_OK
+        password_dialog = Wx::PasswordEntryDialog.new(self, "Please enter the password for this database")
+        if password_dialog.show_modal == Wx::ID_OK
+          password = password_dialog.get_value
+          file = file_dialog.get_path
+          puts file
+          @account_controler = AccountControler.new file, password
+
+          @account_controler.establish_connection
+
+          load_list
+        end
+      end
     end
     def on_new_account
       account_dialog = AccountDialog.new(self, -1, "New Account")
@@ -52,6 +82,10 @@ module DragonsKeep
     end
 
     private
+    
+    def load_list
+      
+    end
 
     def create_menu_bar
       # create menu bar
