@@ -7,7 +7,7 @@ require 'uuid'
 require 'digest/sha1'
 
 module DragonsKeep
-  class AccountControler
+  class AccountController
     attr_reader :encrypt_pass
     attr_accessor :database
 

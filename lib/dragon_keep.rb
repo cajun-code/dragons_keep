@@ -1,6 +1,10 @@
 # To change this template, choose Tools | Templates
 # and open the template in the editor.
 require 'rubygems'
+require 'bundler'
+
+Bundler.setup
+
 require 'wx'
 require 'dragons_keep/keeps_main'
 

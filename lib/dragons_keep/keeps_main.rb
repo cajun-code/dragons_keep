@@ -3,7 +3,7 @@
 
 require 'wx'
 require 'dragons_keep/account_dialog'
-require 'dragons_keep/account_controler'
+require 'dragons_keep/account_controller'
 
 module DragonsKeep
   class KeepsMain < Wx::Frame
@@ -44,7 +44,7 @@ module DragonsKeep
             file << ".keep"
           end
           puts file
-          @account_controler = AccountControler.new file, password
+          @account_controler = AccountController.new file, password
 
           @account_controler.establish_connection
         end
@@ -59,7 +59,7 @@ module DragonsKeep
           password = password_dialog.get_value
           file = file_dialog.get_path
           puts file
-          @account_controler = AccountControler.new file, password
+          @account_controler = AccountController.new file, password
 
           @account_controler.establish_connection
 

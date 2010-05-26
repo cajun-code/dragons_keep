@@ -4,4 +4,9 @@ gem 'ezcrypto'
 gem 'uuid'
 gem 'activerecord', "3.0.0.beta3"
 gem 'sqlite3-ruby'
-gem 'wxruby'
+#gem 'wxruby-ruby19'
+if (RUBY_VERSION =~/^1.9/) != nil
+  gem 'wxruby-ruby19'
+else
+  gem 'wxruby'
+end
