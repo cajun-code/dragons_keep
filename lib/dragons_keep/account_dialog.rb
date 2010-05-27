@@ -54,8 +54,35 @@ module DragonsKeep
       self.set_sizer main_sizer
 
     end
-    def gen_pass_click(event)
 
+    def gen_pass_click(event)
+      # display generate pass dialog
+
+      #@account.generate_password
     end
+
+    def account
+      save_account!
+      @account
+    end
+
+    def account=(account)
+      @account = account
+      load_account
+    end
+
+    private
+    def save_account
+      if not @account.blank?
+
+      end
+    end
+    def load_account
+      if not @account.blank?
+        @name.value = @account.name
+        @url.value = @account.url
+      end
+    end
+
   end
 end

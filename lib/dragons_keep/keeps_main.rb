@@ -18,7 +18,7 @@ module DragonsKeep
     def initialize(title)
       #create an instance of frame
       super(nil, :title => title, :size => [ 400, 300 ])
-      @account_conrtoler = nil
+      @account_controller = nil
       create_menu_bar
       # Create status bar with one cell
       create_status_bar(1)
@@ -43,10 +43,11 @@ module DragonsKeep
           if (file=~/.keep$/) == nil
             file << ".keep"
           end
-          puts file
-          @account_controler = AccountController.new file, password
+          #puts file
+          @account_controller = AccountController.new file, password
 
-          @account_controler.establish_connection
+          @account_controller.establish_connection
+          load_list
         end
       end
     end
@@ -70,21 +71,28 @@ module DragonsKeep
     def on_new_account
       account_dialog = AccountDialog.new(self, -1, "New Account")
       account_dialog.center_on_screen(Wx::BOTH)
+      account_dialog.account = Account.new
       account_dialog.show_modal()
     end
     def on_edit_account
-
+      account = list[@account_list.get_selections[0]]
+      account_dialog = AccountDialog.new(self, -1, "Edit Account")
+      account_dialog.center_on_screen(Wx::BOTH)
+      account_dialog.account = account
+      account_dialog.show_modal()
     end
     def on_copy_password
       Wx::Clipboard.open do | clip |
         clip.data = Wx::TextDataObject.new('Some text')
       end
     end
-
+    
     private
     
     def load_list
-      
+      @list = @account_controller.list
+      @account_list.delete_all_items
+      @list.each {|ele| @account_list.insert_item(ele.name) }
     end
 
     def create_menu_bar

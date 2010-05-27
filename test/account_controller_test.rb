@@ -13,6 +13,7 @@ module DragonsKeep
       @database = File.join(File.dirname(__FILE__), "..", "db", "dragonkeep_test.keep")
       @password = "helloMyNameIs"
       @account_controller = AccountController.new(@database, @password)
+      @account_controller.establish_connection
     end
 
     def test_encrypt_password
@@ -23,19 +24,31 @@ module DragonsKeep
     end
 
     def test_new_account
-
+      puts "Testing New Account"
+      account = Account.new(:name=>"bitbucket", :url=>"http://www.bitbuckent.org/", :user_name=>"javaalley")
+      assert_not_nil(account, "Account was not created")
+      account.generate_password(8, true)
+      puts "Generated Passowrd #{account.unencrypted_password}"
+      assert_not_nil(account.unencrypted_password, "Account password was not generated")
+      response = @account_controller.save_account(account)
+      assert response, "Did not save account"
     end
-    def test_edit_account
-
-    end
+    
     def test_get_account
-
+      puts "Testing Account Retrival"
+      account = @account_controller.get(1)
+      assert_not_nil(account, "Account retrival failed")
+      puts "Account Name: #{account.name}"
     end
-    def test_encrypt_account_data
-
-    end
+    
     def test_decrypt_account_data
-
+      puts "Testing Decryption "
+      account = @account_controller.get(1)
+      assert_not_nil(account, "Account retrival failed")
+      @account_controller.decrypt!(account)
+      assert_not_nil(account.unencrypted_password, "Could not uncrypt password")
+      puts "Account Name: #{account.name}"
+      puts "Account Password: #{account.unencrypted_password}"
     end
 
 

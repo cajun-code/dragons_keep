@@ -45,17 +45,27 @@ module DragonsKeep
 
     def list()
       if @connection
-        Account.find(:all)
+        return Account.find(:all)
       end
+      
     end
     def save_account(account)
       if @connection
-        account.save()
-      end
+        if account.unencrypted?
+          account.encrypt_password(self.encrypt_pass)
+        end
+        return account.save()
+      end      
     end
 
     def get(id)
+      if @connection
+        return Account.find id
+      end
+    end
 
+    def decrypt!(account)
+      account.decrpyt_password self.encrypt_pass
     end
   end
 end
