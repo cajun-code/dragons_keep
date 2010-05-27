@@ -5,6 +5,7 @@
         <data xmlns="http://www.netbeans.org/ns/ruby-project/1">
             <name>dragons_keep</name>
             <source-roots>
+                <root id="src.bin.dir" name="Executable Files"/>
                 <root id="src.config.dir" name="Configuration"/>
                 <root id="src.db.dir" name="Database Files"/>
                 <root id="src.dir"/>

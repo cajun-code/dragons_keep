@@ -1,9 +1,14 @@
+#! /usr/etc ruby
 # To change this template, choose Tools | Templates
 # and open the template in the editor.
 require 'rubygems'
-require 'bundler'
+#require 'bundler'
+#Bundler.setup
 
-Bundler.setup
+# Set the path to load from the lib and main directory
+path = File.expand_path(File.dirname(__FILE__))
+$: << path
+$: << File.join(path, "..", "lib")
 
 require 'wx'
 require 'dragons_keep/keeps_main'
