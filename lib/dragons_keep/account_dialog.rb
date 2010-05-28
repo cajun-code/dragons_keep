@@ -81,6 +81,8 @@ module DragonsKeep
       if not @account.blank?
         @name.value = @account.name
         @url.value = @account.url
+        @user.value = @account.user_name
+        @password.value = @account.unencrypted_password.blank? ? @account.password : @account.unencrypted_password
       end
     end
 

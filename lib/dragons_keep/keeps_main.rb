@@ -45,9 +45,9 @@ module DragonsKeep
           end
           #puts file
           @account_controller = AccountController.new file, password
-
-          @account_controller.establish_connection
+          @account_controller.establish_connection          
           load_list
+#          update_ui
         end
       end
     end
@@ -61,10 +61,9 @@ module DragonsKeep
           file = file_dialog.get_path
           puts file
           @account_controller = AccountController.new file, password
-
-          @account_controller.establish_connection
-
+          @account_controller.establish_connection          
           load_list
+#          update_ui
         end
       end
     end
@@ -72,18 +71,23 @@ module DragonsKeep
       account_dialog = AccountDialog.new(self, -1, "New Account")
       account_dialog.center_on_screen(Wx::BOTH)
       account_dialog.account = Account.new
-      account_dialog.show_modal()
+      if account_dialog.show_modal()== Wx::ID_OK
+        @account_controller.save_account(account_dialog.account)
+        load_list
+      end
     end
     def on_edit_account
-      account = list[@account_list.get_selection]
+      account = @list[@account_list.get_selection]
       account_dialog = AccountDialog.new(self, -1, "Edit Account")
       account_dialog.center_on_screen(Wx::BOTH)
       account_dialog.account = account
       account_dialog.show_modal()
     end
     def on_copy_password
+      account = @list[@account_list.get_selection]
+      @account_controller.decrypt!(account)
       Wx::Clipboard.open do | clip |
-        clip.data = Wx::TextDataObject.new('Some text')
+        clip.data = Wx::TextDataObject.new(account.unencrypted_password)
       end
     end
     
@@ -139,14 +143,18 @@ module DragonsKeep
       evt_menu ID_EDIT_COPY, :on_copy_password
       evt_menu ID_FILE_NEW_ACCOUNT, :on_new_account
       evt_menu ID_FILE_EDIT_ACCOUNT, :on_edit_account
-      evt_update_ui(ID_FILE_NEW_ACCOUNT)do |evt|
-        evt.enable(!@account_conrtoler.nil?)
+      update_ui
+    end
+
+    def update_ui
+        evt_update_ui(ID_FILE_NEW_ACCOUNT)do |evt|
+        evt.enable(! @account_controller.nil?)
       end
       evt_update_ui(ID_FILE_EDIT_ACCOUNT)do |evt|
-        evt.enable(!(@account_conrtoler.nil?) && @account_list.get_selections.nil?)
+        evt.enable(!(@account_controller.nil? && @account_list.is_empty))
       end
       evt_update_ui(ID_EDIT_COPY) do |evt|
-        evt.enable(!(@account_conrtoler.nil?) && @account_list.get_selections.nil?)
+        evt.enable(!(@account_controller.nil? && @account_list.is_empty))
       end
     end
 
