@@ -60,9 +60,9 @@ module DragonsKeep
           password = password_dialog.get_value
           file = file_dialog.get_path
           puts file
-          @account_controler = AccountController.new file, password
+          @account_controller = AccountController.new file, password
 
-          @account_controler.establish_connection
+          @account_controller.establish_connection
 
           load_list
         end
@@ -75,7 +75,7 @@ module DragonsKeep
       account_dialog.show_modal()
     end
     def on_edit_account
-      account = list[@account_list.get_selections[0]]
+      account = list[@account_list.get_selection]
       account_dialog = AccountDialog.new(self, -1, "Edit Account")
       account_dialog.center_on_screen(Wx::BOTH)
       account_dialog.account = account
@@ -91,8 +91,8 @@ module DragonsKeep
     
     def load_list
       @list = @account_controller.list
-      @account_list.delete_all_items
-      @list.each {|ele| @account_list.insert_item(ele.name) }
+      @account_list.clear
+      @list.each {|ele| @account_list.append(ele.name) }
     end
 
     def create_menu_bar
@@ -139,15 +139,15 @@ module DragonsKeep
       evt_menu ID_EDIT_COPY, :on_copy_password
       evt_menu ID_FILE_NEW_ACCOUNT, :on_new_account
       evt_menu ID_FILE_EDIT_ACCOUNT, :on_edit_account
-#      evt_update_ui(ID_FILE_NEW_ACCOUNT)do |evt|
-#        evt.enable(!@account_conrtoler.nil?)
-#      end
+      evt_update_ui(ID_FILE_NEW_ACCOUNT)do |evt|
+        evt.enable(!@account_conrtoler.nil?)
+      end
       evt_update_ui(ID_FILE_EDIT_ACCOUNT)do |evt|
         evt.enable(!(@account_conrtoler.nil?) && @account_list.get_selections.nil?)
       end
-#      evt_update_ui(ID_EDIT_COPY) do |evt|
-#        evt.enable(!(@account_conrtoler.nil?) && @account_list.get_selections.nil?)
-#      end
+      evt_update_ui(ID_EDIT_COPY) do |evt|
+        evt.enable(!(@account_conrtoler.nil?) && @account_list.get_selections.nil?)
+      end
     end
 
   end
