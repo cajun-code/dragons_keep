@@ -78,10 +78,14 @@ module DragonsKeep
     end
     def on_edit_account
       account = @list[@account_list.get_selection]
+      @account_controller.decrypt!(account)
       account_dialog = AccountDialog.new(self, -1, "Edit Account")
       account_dialog.center_on_screen(Wx::BOTH)
       account_dialog.account = account
-      account_dialog.show_modal()
+      if account_dialog.show_modal()== Wx::ID_OK
+        @account_controller.save_account(account_dialog.account)
+        load_list
+      end
     end
     def on_copy_password
       account = @list[@account_list.get_selection]

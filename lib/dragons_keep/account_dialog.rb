@@ -74,7 +74,16 @@ module DragonsKeep
     private
     def save_account
       if not @account.blank?
-
+        if @account.unencrypted_password != @pass.value
+           password_dialog = Wx::PasswordEntryDialog.new(self, "Please confirm the password")
+           if password_dialog.show_modal == Wx::ID_OK
+             @account.password_confirmation = password_dialog.get_value
+             @account.unencrypted_password = @pass.value
+           end
+           @account.name = @name.value
+           @account.user_name = @user.value
+           @account.url = @url.value
+        end
       end
     end
     def load_account
@@ -82,7 +91,7 @@ module DragonsKeep
         @name.value = @account.name
         @url.value = @account.url
         @user.value = @account.user_name
-        @password.value = @account.unencrypted_password.blank? ? @account.password : @account.unencrypted_password
+        @pass.value = @account.unencrypted_password.blank? ? @account.password : @account.unencrypted_password
       end
     end
 
