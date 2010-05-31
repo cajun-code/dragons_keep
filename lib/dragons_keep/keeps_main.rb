@@ -72,7 +72,7 @@ module DragonsKeep
       account_dialog.center_on_screen(Wx::BOTH)
       account_dialog.account = Account.new
       if account_dialog.show_modal()== Wx::ID_OK
-        @account_controller.save_account(account_dialog.account)
+        @account_controller.save!(account_dialog.account)
         load_list
       end
     end
@@ -83,7 +83,7 @@ module DragonsKeep
       account_dialog.center_on_screen(Wx::BOTH)
       account_dialog.account = account
       if account_dialog.show_modal()== Wx::ID_OK
-        @account_controller.save_account(account_dialog.account)
+        @account_controller.save!(account_dialog.account)
         load_list
       end
     end

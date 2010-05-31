@@ -1,6 +1,7 @@
 # To change this template, choose Tools | Templates
 # and open the template in the editor.
 require 'wx'
+require 'dragons_keep/generate_password_dialog'
 
 module DragonsKeep
   class AccountDialog < Wx::Dialog
@@ -57,12 +58,15 @@ module DragonsKeep
 
     def gen_pass_click(event)
       # display generate pass dialog
-
+      gen_dialog = GeneratePasswordDialog.new self, -1, "Generate Password"
+      if gen_dialog.show_modal() == Wx::ID_OK
+        @account.generate_password gen_dialog.password_length, gen_dialog.use_special_chars?
+      end
       #@account.generate_password
     end
 
     def account
-      save_account!
+      save_account
       @account
     end
 
@@ -74,20 +78,20 @@ module DragonsKeep
     private
     def save_account
       if not @account.blank?
-        if @account.unencrypted_password != @pass.value
+        if @account.unencrypted_password != @pass.value && @account.password_confirmation.blank?
            password_dialog = Wx::PasswordEntryDialog.new(self, "Please confirm the password")
            if password_dialog.show_modal == Wx::ID_OK
              @account.password_confirmation = password_dialog.get_value
              @account.unencrypted_password = @pass.value
-           end
-           @account.name = @name.value
-           @account.user_name = @user.value
-           @account.url = @url.value
+           end           
         end
+        @account.name = @name.value
+        @account.user_name = @user.value
+        @account.url = @url.value
       end
     end
     def load_account
-      if not @account.blank?
+      if not @account.name.blank?
         @name.value = @account.name
         @url.value = @account.url
         @user.value = @account.user_name

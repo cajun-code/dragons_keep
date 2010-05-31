@@ -49,7 +49,7 @@ module DragonsKeep
       end
       
     end
-    def save_account(account)
+    def save!(account)
       if @connection
         if account.unencrypted?
           account.encrypt_password(self.encrypt_pass)
