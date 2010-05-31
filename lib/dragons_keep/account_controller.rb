@@ -67,5 +67,9 @@ module DragonsKeep
     def decrypt!(account)
       account.decrpyt_password self.encrypt_pass
     end
+
+    def delete(account)
+      account.destroy
+    end
   end
 end

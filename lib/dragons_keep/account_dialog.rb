@@ -61,8 +61,8 @@ module DragonsKeep
       gen_dialog = GeneratePasswordDialog.new self, -1, "Generate Password"
       if gen_dialog.show_modal() == Wx::ID_OK
         @account.generate_password gen_dialog.password_length, gen_dialog.use_special_chars?
-      end
-      #@account.generate_password
+        @pass.value = @account.unencrypted_password
+      end      
     end
 
     def account
