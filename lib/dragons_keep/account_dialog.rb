@@ -41,7 +41,7 @@ module DragonsKeep
       # Create password entry      
       label = Wx::StaticText.new(self, :label=>"Password:")
       grid_sizer.add label, 0, Wx::ALL |Wx::ALIGN_RIGHT
-      @pass = Wx::TextCtrl.new self, ID_PASSWORD
+      @pass = Wx::TextCtrl.new self, ID_PASSWORD, :style=> Wx::TE_PASSWORD
       grid_sizer.add @pass, 1, Wx::EXPAND
       main_sizer.add grid_sizer, 0, Wx::GROW|Wx::ALIGN_CENTER_VERTICAL|Wx::ALL, 5
       grid_sizer.add_growable_col(1)
