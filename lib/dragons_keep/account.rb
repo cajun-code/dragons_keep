@@ -7,7 +7,14 @@ module DragonsKeep
   class Account < ActiveRecord::Base
 
     # Transient storage of unencrypted password and confirmation field
-    attr_accessor :unencrypted_password, :password_confirmation
+    attr_accessor :unencrypted_password
+    attr_reader :password_confirmation
+
+    # create writer for password confirmation
+    def password_confirmation=(value)
+      @password_confirmation = value
+      @unencrypted = true
+    end
 
     # loading data validate password filed and check status
     def after_initialize   

@@ -127,12 +127,14 @@ module DragonsKeep
       @account_list.clear
       @list.each {|ele| @account_list.append(ele.name) }
     end
+
     # helper to load png
     def png_bitmap(base_name)
-
       png_file = File.join( File.dirname(__FILE__), 'icons', base_name )
+      puts "image : #{png_file}"
       Wx::Bitmap.new(png_file, Wx::BITMAP_TYPE_PNG)
     end
+
     # Create the Tool bar
     def create_tb
       tb = self.create_tool_bar

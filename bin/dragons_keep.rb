@@ -2,8 +2,8 @@
 # To change this template, choose Tools | Templates
 # and open the template in the editor.
 require 'rubygems'
-#require 'bundler'
-#Bundler.setup
+require 'bundler'
+Bundler.setup
 
 # Set the path to load from the lib and main directory
 path = File.expand_path(File.dirname(__FILE__))
