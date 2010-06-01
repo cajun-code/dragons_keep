@@ -9,6 +9,7 @@ module DragonsKeep
   class KeepsMain < Wx::Frame
     ID_FILE_NEW = 1001
     ID_FILE_CONNECT = 1002
+    ID_FILE_DISCONNECT = 1003
     ID_ACCOUNT_NEW = 3001
     ID_ACCOUNT_EDIT = 3002
     ID_ACCOUNT_DELETE = 3003
@@ -71,6 +72,13 @@ module DragonsKeep
         end
       end
     end
+
+    def on_disconnect
+      @account_controller = nil
+      @list = nil
+      @account_list.clear
+    end
+
     def on_new_account
       account_dialog = AccountDialog.new(self, -1, "New Account")
       account_dialog.center_on_screen(Wx::BOTH)
@@ -138,9 +146,11 @@ module DragonsKeep
       # Create File menu
       menu_file = Wx::Menu.new
       # Create New option on File menu
-      menu_file.append ID_FILE_NEW, "&New Database...", "Create New Database"
+      menu_file.append ID_FILE_NEW, "&New Keep...", "Create New Keep File"
       # Create Connect option on File menu
-      menu_file.append ID_FILE_CONNECT, "&Connect Database...", "Connect to Existing Database"
+      menu_file.append ID_FILE_CONNECT, "&Connect Keep...", "Connect to Existing Keep File"
+      # Create Disconnect menu option
+      menu_file.append ID_FILE_DISCONNECT, "Disconnect Keep", "Disconnect From the Keep File"
       # add menu spacer to file menu
       menu_file.append_separator()
       # create Account menu
@@ -177,6 +187,7 @@ module DragonsKeep
       evt_menu Wx::ID_EXIT, :on_quit
       evt_menu ID_FILE_NEW, :on_new_database
       evt_menu ID_FILE_CONNECT, :on_connect_database
+      evt_menu ID_FILE_DISCONNECT, :on_disconnect
       evt_menu ID_EDIT_COPY, :on_copy_password
       evt_menu ID_ACCOUNT_NEW, :on_new_account
       evt_menu ID_ACCOUNT_EDIT, :on_edit_account
