@@ -29,10 +29,16 @@ module DragonsKeep
       migrations = File.join(path, "..", "..", "db", "migrations")      
       if migrate
         ActiveRecord::Migrator.migrate(migrations, nil)
+      else
+        validate_connection
       end
       @connection = true
     end
-
+    # Check the first record in the database and decrypt the password to see if the password is valid
+    def validate_connection
+      account = Account.find(:first)
+      self.decrypt!(account)
+    end
     def initialize(database=nil, password=nil)
       @connection = false
       if(!(database.nil?))
@@ -65,7 +71,11 @@ module DragonsKeep
     end
 
     def decrypt!(account)
-      account.decrpyt_password self.encrypt_pass
+      begin
+        account.decrpyt_password self.encrypt_pass
+      rescue OpenSSL::Cipher::CipherError
+        raise PasswordException, "Password is invalid"
+      end
     end
 
     def delete(account)

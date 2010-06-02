@@ -64,11 +64,16 @@ module DragonsKeep
         if password_dialog.show_modal == Wx::ID_OK
           password = password_dialog.get_value
           file = file_dialog.get_path
-          puts file
-          @account_controller = AccountController.new file, password
-          @account_controller.establish_connection          
-          load_list
-#          update_ui
+          #puts file
+          begin
+            @account_controller = AccountController.new file, password
+            @account_controller.establish_connection
+            load_list
+          rescue PasswordException
+            dlg = Wx::MessageDialog.new(self, "The Password you entered is invalid", "Password", Wx::OK | Wx::ICON_ERROR)
+            dlg.show_modal()
+            @account_controller = nil
+          end
         end
       end
     end
@@ -99,7 +104,7 @@ module DragonsKeep
           @account_controller.save!(account_dialog.account)
           load_list
         end
-      rescue OpenSSL::Cipher::CipherError
+      rescue PasswordException
          dlg = Wx::MessageDialog.new(self, "The Password you entered is invalid", "Password", Wx::OK | Wx::ICON_ERROR)
          dlg.show_modal()
       end
@@ -129,18 +134,21 @@ module DragonsKeep
     end
 
     # helper to load png
-    def png_bitmap(base_name)
+    def load_bitmap(base_name, mode)
       png_file = File.join( File.dirname(__FILE__), 'icons', base_name )
       puts "image : #{png_file}"
-      Wx::Bitmap.new(png_file, Wx::BITMAP_TYPE_PNG)
+      Wx::Bitmap.new(png_file, mode ) # Wx::BITMAP_TYPE_PNG
     end
 
     # Create the Tool bar
     def create_tb
-      tb = self.create_tool_bar
-      tb.add_tool ID_TOOL_NEW_ACCOUNT, "New", png_bitmap("lock_add.png"), "New Account"
-      tb.add_tool ID_TOOL_EDIT_ACCOUNT, "Edit", png_bitmap("lock_edit.png"), "Edit Account"
-      tb.add_tool ID_TOOL_DELETE_ACCOUNT, "Delete", png_bitmap("lock_delete.png"), "Delete Account"
+      tb = self.create_tool_bar(Wx::TB_HORIZONTAL | Wx::NO_BORDER | Wx::TB_FLAT ) #| Wx::TB_TEXT
+      tb.add_tool ID_TOOL_NEW_ACCOUNT, "New", load_bitmap("lock_add.png",  Wx::BITMAP_TYPE_PNG), "New Account"
+      tb.add_tool ID_TOOL_EDIT_ACCOUNT, "Edit", load_bitmap("lock_edit.png",  Wx::BITMAP_TYPE_PNG), "Edit Account"
+      tb.add_tool ID_TOOL_DELETE_ACCOUNT, "Delete", load_bitmap("lock_delete.png",  Wx::BITMAP_TYPE_PNG), "Delete Account"
+      # needed to make the tool bar appear on windows
+      tb.realize()
+
     end
     def create_menu_bar
       # create menu bar
