@@ -18,7 +18,7 @@ module DragonsKeep
 
     # loading data validate password filed and check status
     def after_initialize   
-      @unencrypted = self.password.blank?
+      @unencrypted = self.password.nil?
     end
 
     # Before create data set salt and encrypt password
