@@ -10,7 +10,7 @@ require 'digest/sha1'
 module DragonsKeep
   class AccountControllerTest < Test::Unit::TestCase
     def setup()
-      @database = File.join(File.dirname(__FILE__), "..", "db", "dragonkeep_test.keep")
+      @database = File.join(File.dirname(__FILE__), "..", "dragonkeep_test.keep")
       @password = "helloMyNameIs"
       @account_controller = AccountController.new(@database, @password)
       @account_controller.establish_connection
@@ -30,7 +30,8 @@ module DragonsKeep
       account.generate_password(8, true)
       puts "Generated Passowrd #{account.unencrypted_password}"
       assert_not_nil(account.unencrypted_password, "Account password was not generated")
-      response = @account_controller.save_account(account)
+      response = @account_controller.save!(account)
+      puts "encrypted Passowrd #{account.password}"
       assert response, "Did not save account"
     end
     

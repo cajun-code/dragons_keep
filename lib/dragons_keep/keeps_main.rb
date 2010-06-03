@@ -2,7 +2,6 @@
 # and open the template in the editor.
 
 require 'wx'
-require 'active_record'
 require 'dragons_keep/account_dialog'
 require 'dragons_keep/account_controller'
 

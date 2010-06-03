@@ -1,10 +1,15 @@
+source "http://rubygems.org"
 
 # ruby gems needed for Dragon's Keep
 gem 'ezcrypto'
 gem 'uuid'
-gem 'activerecord', "3.0.0.beta3"
-gem 'sqlite3-ruby'
-#gem 'wxruby-ruby19'
+# using datamapper instead of activerecord
+
+#gem 'activerecord', "3.0.0.beta3"
+#gem 'sqlite3-ruby'
+gem 'dm-core'
+gem 'do_sqlite3'
+#Decide which gem to load based on version of ruby installed
 if (RUBY_VERSION =~/^1.9/) != nil
   gem 'wxruby-ruby19'
 else

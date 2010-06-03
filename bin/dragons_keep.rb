@@ -12,9 +12,6 @@ $: << File.join(path, "..", "lib")
 
 require 'wx'
 require 'dragons_keep/keeps_main'
-require 'active_record'
-require 'ezcrypto'
-require 'uuid'
 
 module DragonsKeep
 

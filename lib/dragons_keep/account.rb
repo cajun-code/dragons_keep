@@ -1,11 +1,23 @@
 # To change this template, choose Tools | Templates
 # and open the template in the editor.
-require 'active_record'
+require 'dm-core'
 require 'ezcrypto'
 module DragonsKeep
   # Account class to store accounts and passwords into a keeper system
-  class Account < ActiveRecord::Base
+  class Account 
+    include DataMapper::Resource
+    #Data Mapper properties
+    property :id, Serial
+    property :name, String, :length => 100
+    property :password, String, :length => 100
+    property :salt, String, :length => 100
+    property :user_name, String, :length => 100
+    property :url, String, :length => 100
 
+    #register callbacks
+    before :save, :before_create
+    
+    
     # Transient storage of unencrypted password and confirmation field
     attr_accessor :unencrypted_password
     attr_reader :password_confirmation
@@ -36,7 +48,7 @@ module DragonsKeep
     def encrypt_password(encrypt_pass)
       if self.unencrypted? && self.unencrypted_password == self.password_confirmation
         self.create_salt
-        self.password = EzCrypto::Key.encrypt_with_password encrypt_pass, self.salt, self.unencrypted_password
+        self.password = Base64.encode64(EzCrypto::Key.encrypt_with_password(encrypt_pass, self.salt, self.unencrypted_password))
         @unencrypted = false
       end
     end
@@ -45,15 +57,15 @@ module DragonsKeep
     # encrypt_pass = Given password when user created the account information
     def decrpyt_password(encrypt_pass)
       if !(self.unencrypted?)
-        self.unencrypted_password = EzCrypto::Key.decrypt_with_password(encrypt_pass, self.salt, self.password)
+        self.unencrypted_password = EzCrypto::Key.decrypt_with_password(encrypt_pass, self.salt, Base64.decode64( self.password))
         @unencrypted = true
         self.password_confirmation=""
       end
     end
     
     # Is the password encrypted?
-    def unencrypted?
-      @unencrypted
+    def unencrypted?      
+      return (@unencrypted.nil?)? self.password.nil?: @unencrypted
     end
     
     # Generate a random password

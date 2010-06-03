@@ -1,7 +1,7 @@
 # To change this template, choose Tools | Templates
 # and open the template in the editor.
 require 'dragons_keep/account'
-require 'active_record'
+require 'dm-core'
 require 'ezcrypto'
 require 'uuid'
 require 'digest/sha1'
@@ -20,15 +20,12 @@ module DragonsKeep
       if !(File.exist?(self.database))
         migrate = true
       end
-      properties = {
-        :adapter => "sqlite3",
-        :database => self.database,
-      }
-      ActiveRecord::Base.establish_connection(properties)     
-      path = File.expand_path(File.dirname(__FILE__))
-      migrations = File.join(path, "..", "..", "db", "migrations")      
+     
+      DataMapper::Logger.new $stdout, :debug
+
+      DataMapper.setup :default, "sqlite3://#{self.database}"
       if migrate
-        ActiveRecord::Migrator.migrate(migrations, nil)
+        DataMapper.auto_migrate!
       else
         validate_connection
       end
@@ -36,13 +33,16 @@ module DragonsKeep
     end
     # Check the first record in the database and decrypt the password to see if the password is valid
     def validate_connection
-      account = Account.find(:first)
-      self.decrypt!(account)
+      account = Account.first
+      if ! account.nil?
+        self.decrypt!(account)
+      end
     end
+
     def initialize(database=nil, password=nil)
       @connection = false
       if(!(database.nil?))
-        self.database = database
+        self.database = File.expand_path database
       end
       if (!(password.nil?))
         self.encrypt_pass = password
@@ -51,7 +51,7 @@ module DragonsKeep
 
     def list()
       if @connection
-        return Account.find(:all)
+        return Account.all
       end
       
     end
@@ -66,7 +66,7 @@ module DragonsKeep
 
     def get(id)
       if @connection
-        return Account.find id
+        return Account.get id
       end
     end
 

@@ -9,9 +9,6 @@ require 'rake/clean'
 require 'rake/gempackagetask'
 require 'rake/rdoctask'
 require 'rake/testtask'
-require 'active_record'
-require 'yaml'
-require 'logger'
 require 'bundler'
 
 
@@ -50,12 +47,12 @@ Rake::TestTask.new do |t|
   t.test_files = FileList['test/**/*.rb']
 end
 
-desc "Migrate the database through migrations scripts"
-task :migrate => :enviroment do
-  ActiveRecord::Migrator.migrate('db/migrations', ENV["VERSION"]? ENV["VERSION"].to_i : nil)
-end
-
-task :enviroment do
-  ActiveRecord::Base.establish_connection(YAML::load(File.open('config/database.yml')))
-  ActiveRecord::Base.logger = Logger.new(File.open('database.log', 'a'))
-end
+#desc "Migrate the database through migrations scripts"
+#task :migrate => :enviroment do
+#  ActiveRecord::Migrator.migrate('db/migrations', ENV["VERSION"]? ENV["VERSION"].to_i : nil)
+#end
+#
+#task :enviroment do
+#  ActiveRecord::Base.establish_connection(YAML::load(File.open('config/database.yml')))
+#  ActiveRecord::Base.logger = Logger.new(File.open('database.log', 'a'))
+#end
