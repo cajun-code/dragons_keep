@@ -7,8 +7,8 @@ Bundler.setup
 
 # Set the path to load from the lib and main directory
 path = File.expand_path(File.dirname(__FILE__))
-$: << path
-$: << File.join(path, "..", "lib")
+#$: << path
+#$: << File.join(path, "..", "lib")
 
 require 'wx'
 require 'dragons_keep/keeps_main'

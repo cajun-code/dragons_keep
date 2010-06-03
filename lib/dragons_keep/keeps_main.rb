@@ -19,7 +19,7 @@ module DragonsKeep
     ID_TOOL_DELETE_ACCOUNT = 103
 
 
-    def initialize(title)
+    def initialize(title)      
       #create an instance of frame
       super(nil, :title => title, :size => [ 400, 300 ])
       @account_controller = nil
@@ -135,7 +135,9 @@ module DragonsKeep
 
     # helper to load png
     def load_bitmap(base_name, mode)
+
       png_file = File.join( File.dirname(__FILE__), 'icons', base_name )
+      #png_file = "dragons_keep/icons/#{base_name}"
       puts "image : #{png_file}"
       Wx::Bitmap.new(png_file, mode ) # Wx::BITMAP_TYPE_PNG
     end
