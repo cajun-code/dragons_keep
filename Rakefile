@@ -14,14 +14,15 @@ require 'bundler'
 
 spec = Gem::Specification.new do |s|
   s.name = 'dragons_keep'
-  s.version = '1.0.0'
+  s.version = '0.5.0'
   s.has_rdoc = true
   s.extra_rdoc_files = ['README', 'LICENSE']
-  s.summary = 'Your summary here'
+  s.summary = 'Secure Password Keeper Application'
   s.description = s.summary
   s.author = 'Allan Davis'
   s.email = 'javaalley@gmail.com'
-  # s.executables = ['your_executable_here']
+  s.homepage 'http://github.com/javaalley/dragons_keep'
+  s.executables = ['bin/dragons_keep']
   s.files = %w(LICENSE README Rakefile) + Dir.glob("{bin,lib,spec,db}/**/*")
   s.require_path = "lib"
   s.bindir = "bin"
