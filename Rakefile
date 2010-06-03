@@ -12,6 +12,8 @@ require 'rake/testtask'
 require 'active_record'
 require 'yaml'
 require 'logger'
+require 'bundler'
+
 
 spec = Gem::Specification.new do |s|
   s.name = 'dragons_keep'
@@ -26,6 +28,7 @@ spec = Gem::Specification.new do |s|
   s.files = %w(LICENSE README Rakefile) + Dir.glob("{bin,lib,spec,db}/**/*")
   s.require_path = "lib"
   s.bindir = "bin"
+  s.add_bundler_dependencies
 end
 
 Rake::GemPackageTask.new(spec) do |p|
