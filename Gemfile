@@ -9,9 +9,13 @@ gem 'uuid'
 #gem 'sqlite3-ruby'
 gem 'dm-core'
 gem 'do_sqlite3'
-#Decide which gem to load based on version of ruby installed
-if (RUBY_VERSION =~/^1.9/) != nil
-  gem 'wxruby-ruby19'
+if (RUBY_PLATFORM =~ /linux$/) == nil
+  #Decide which gem to load based on version of ruby installed
+  if (RUBY_VERSION =~/^1.9/) != nil
+    gem 'wxruby-ruby19'
+  else
+    gem 'wxruby'
+  end
 else
-  gem 'wxruby'
+  gem 'wxruby', "2.0.1"
 end
