@@ -1,1 +1,1 @@
-ruby dragons_keep
+@"ruby.exe" "%~dpn0" %*
