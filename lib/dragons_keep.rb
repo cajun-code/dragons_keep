@@ -2,16 +2,20 @@
 # To change this template, choose Tools | Templates
 # and open the template in the editor.
 require 'rubygems'
-require 'bundler'
-Bundler.setup
+#require 'bundler'
+#Bundler.setup
 
 # Set the path to load from the lib and main directory
 path = File.expand_path(File.dirname(__FILE__))
-#$: << path
+$LOAD_PATH.insert 0, path
+#puts "LOAD_PATH"
+#puts $LOAD_PATH
 #$: << File.join(path, "..", "lib")
 
 require 'wx'
 require 'dragons_keep/keeps_main'
+require 'ezcrypto'
+require 'uuid'
 
 module DragonsKeep
 

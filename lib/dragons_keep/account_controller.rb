@@ -21,7 +21,7 @@ module DragonsKeep
         migrate = true
       end
      
-      DataMapper::Logger.new $stdout, :debug
+      #DataMapper::Logger.new $stdout, :debug
 
       DataMapper.setup :default, "sqlite3://#{self.database}"
       if migrate

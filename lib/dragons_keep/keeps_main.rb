@@ -138,7 +138,7 @@ module DragonsKeep
 
       png_file = File.join( File.dirname(__FILE__), 'icons', base_name )
       #png_file = "dragons_keep/icons/#{base_name}"
-      puts "image : #{png_file}"
+#      puts "image : #{png_file}"
       Wx::Bitmap.new(png_file, mode ) # Wx::BITMAP_TYPE_PNG
     end
 
