@@ -9,7 +9,7 @@ module DragonsKeep
     ID_SIZE = 202
     def initialize(parent, id, title)
       super(parent, id, title)
-      self.set_size(Wx::Size.new(400, 100))
+      self.set_size(Wx::Size.new(400, 150))
       main_sizer = Wx::VBoxSizer.new
       grid_sizer = Wx::FlexGridSizer.new(2,2,5,5)
       grid_sizer.add_growable_col(1)
