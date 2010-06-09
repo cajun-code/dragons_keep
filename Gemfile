@@ -8,7 +8,8 @@ gem 'uuid'
 #gem 'activerecord', "3.0.0.beta3"
 #gem 'sqlite3-ruby'
 gem 'dm-core'
-gem 'do_sqlite3'
+#gem 'do_sqlite3'
+gem 'dm-sqlite-adapter'
 if (RUBY_PLATFORM =~ /linux$/) == nil
   #Decide which gem to load based on version of ruby installed
   if (RUBY_VERSION =~/^1.9/) != nil
