@@ -1,0 +1,8 @@
+UUID Issue 
+
+When OCRA is used to bundle the uuid gem with an application, it does not carry the gemspec file
+Line 63 of uuid.rb reads the gemspec file and pulls the version number out of that.  
+With that file missing it causes the load error and the app to crash.
+
+tempary fix: replace uuid with one that changes the version number to a string number in the file.
+
