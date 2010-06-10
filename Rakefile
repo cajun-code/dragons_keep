@@ -21,9 +21,9 @@ spec = Gem::Specification.new do |s|
   s.description = s.summary
   s.author = 'Allan Davis'
   s.email = 'javaalley@gmail.com'
-  s.homepage 'http://github.com/javaalley/dragons_keep'
-  s.executables = ['bin/dragons_keep']
-  s.files = %w(LICENSE README Rakefile) + Dir.glob("{bin,lib,spec,db}/**/*")
+  s.homepage = 'http://github.com/javaalley/dragons_keep'
+  s.executables = ['dragons_keep']
+  s.files = %w(LICENSE README Rakefile Gemfile) + Dir.glob("{bin,lib,spec,db}/**/*")
   s.require_path = "lib"
   s.bindir = "bin"
   s.add_bundler_dependencies
